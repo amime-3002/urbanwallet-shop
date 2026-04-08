@@ -39,7 +39,7 @@ const Contact = () => {
               {[
                 { icon: Mail, label: "hello@urbanwallet.com" },
                 { icon: Phone, label: "+1 (555) 123-4567" },
-                { icon: MapPin, label: "123 Artisan Way, New York, NY 10013" },
+                { icon: MapPin, label: "Boumerdes, Algeria" },
               ].map((item) => (
                 <div key={item.label} className="flex items-center gap-4">
                   <div className="w-10 h-10 rounded-full bg-gold/10 flex items-center justify-center">
