@@ -38,7 +38,7 @@ const Contact = () => {
             <div className="space-y-6">
               {[
                 { icon: Mail, label: "hello@urbanwallet.com" },
-                { icon: Phone, label: "+1 (555) 123-4567" },
+                { icon: Phone, label: "+213 555 123 456" },
                 { icon: MapPin, label: "Boumerdes, Algeria" },
               ].map((item) => (
                 <div key={item.label} className="flex items-center gap-4">
