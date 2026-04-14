@@ -42,7 +42,7 @@ const CartDrawer = () => {
                     <div className="flex-1 flex flex-col justify-between">
                       <div>
                         <p className="font-display text-sm font-semibold">{item.product.name}</p>
-                        <p className="text-gold font-body text-sm">${item.product.price}</p>
+                        <p className="text-gold font-body text-sm">{item.product.price.toLocaleString()} DA</p>
                       </div>
                       <div className="flex items-center gap-2">
                         <button
@@ -74,7 +74,7 @@ const CartDrawer = () => {
             <div className="border-t border-border pt-4 space-y-4">
               <div className="flex justify-between font-display text-lg">
                 <span>Total</span>
-                <span className="text-gold">${totalPrice.toFixed(2)}</span>
+                <span className="text-gold">{totalPrice.toLocaleString()} DA</span>
               </div>
               <Button
                 onClick={() => {

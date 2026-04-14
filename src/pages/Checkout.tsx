@@ -72,18 +72,18 @@ const Checkout = () => {
                 {items.map((item) => (
                   <div key={item.product.id} className="flex justify-between font-body text-sm">
                     <span className="text-muted-foreground">{item.product.name} × {item.quantity}</span>
-                    <span>${(item.product.price * item.quantity).toFixed(2)}</span>
+                    <span>{(item.product.price * item.quantity).toLocaleString()} DA</span>
                   </div>
                 ))}
               </div>
               <div className="border-t border-border pt-3">
                 <div className="flex justify-between font-body text-sm text-muted-foreground">
                   <span>Shipping</span>
-                  <span>{totalPrice >= 100 ? "Free" : "$9.99"}</span>
+                  <span>{totalPrice >= 20000 ? "Free" : "1,500 DA"}</span>
                 </div>
                 <div className="flex justify-between font-display text-lg font-bold mt-2">
                   <span>Total</span>
-                  <span className="text-gold">${(totalPrice + (totalPrice >= 100 ? 0 : 9.99)).toFixed(2)}</span>
+                  <span className="text-gold">{(totalPrice + (totalPrice >= 20000 ? 0 : 1500)).toLocaleString()} DA</span>
                 </div>
               </div>
               <Button type="submit" className="w-full bg-gold hover:bg-gold-dark text-accent-foreground font-body tracking-wider py-6">
