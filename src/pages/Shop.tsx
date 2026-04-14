@@ -9,9 +9,9 @@ const categories = ["all", "men", "women", "minimalist", "leather"];
 const colors = ["All", "Black", "Brown", "Tan", "Pink", "Navy", "Burgundy"];
 const priceRanges = [
   { label: "All Prices", min: 0, max: Infinity },
-  { label: "Under $80", min: 0, max: 79 },
-  { label: "$80 – $120", min: 80, max: 120 },
-  { label: "Over $120", min: 121, max: Infinity },
+  { label: "Under 16,000 DA", min: 0, max: 15999 },
+  { label: "16,000 – 24,000 DA", min: 16000, max: 24000 },
+  { label: "Over 24,000 DA", min: 24001, max: Infinity },
 ];
 
 const Shop = () => {

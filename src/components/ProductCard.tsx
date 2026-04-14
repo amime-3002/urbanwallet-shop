@@ -58,9 +58,9 @@ const ProductCard = ({ product, index = 0 }: ProductCardProps) => {
           <h3 className="font-display text-base font-semibold hover:text-gold transition-colors">{product.name}</h3>
         </Link>
         <div className="flex items-center gap-2">
-          <span className="font-body text-sm font-semibold text-gold">${product.price}</span>
+          <span className="font-body text-sm font-semibold text-gold">{product.price.toLocaleString()} DA</span>
           {product.originalPrice && (
-            <span className="font-body text-xs text-muted-foreground line-through">${product.originalPrice}</span>
+            <span className="font-body text-xs text-muted-foreground line-through">{product.originalPrice.toLocaleString()} DA</span>
           )}
         </div>
       </div>

@@ -81,9 +81,9 @@ const ProductDetail = () => {
             </div>
 
             <div className="flex items-center gap-3 mb-8">
-              <span className="font-display text-3xl font-bold text-gold">${product.price}</span>
+              <span className="font-display text-3xl font-bold text-gold">{product.price.toLocaleString()} DA</span>
               {product.originalPrice && (
-                <span className="font-body text-lg text-muted-foreground line-through">${product.originalPrice}</span>
+                <span className="font-body text-lg text-muted-foreground line-through">{product.originalPrice.toLocaleString()} DA</span>
               )}
             </div>
 
@@ -110,7 +110,7 @@ const ProductDetail = () => {
             </Button>
 
             <div className="mt-8 grid grid-cols-2 gap-4">
-              {["Free Shipping over $100", "30-Day Returns", "RFID Protection", "Lifetime Warranty"].map((feat) => (
+              {["Free Shipping over 20,000 DA", "30-Day Returns", "RFID Protection", "Lifetime Warranty"].map((feat) => (
                 <div key={feat} className="flex items-center gap-2 font-body text-xs text-muted-foreground">
                   <Check size={12} className="text-gold" /> {feat}
                 </div>
