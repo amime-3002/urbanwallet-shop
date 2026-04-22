@@ -9,9 +9,9 @@ const categories = ["all", "men", "women", "minimalist", "leather"];
 const colors = ["All", "Black", "Brown", "Tan", "Pink", "Navy", "Burgundy"];
 const priceRanges = [
   { label: "All Prices", min: 0, max: Infinity },
-  { label: "Under 16,000 DA", min: 0, max: 15999 },
-  { label: "16,000 – 24,000 DA", min: 16000, max: 24000 },
-  { label: "Over 24,000 DA", min: 24001, max: Infinity },
+  { label: "Under 5,000 DA", min: 0, max: 4999 },
+  { label: "5,000 – 7,500 DA", min: 5000, max: 7500 },
+  { label: "Over 7,500 DA", min: 7501, max: Infinity },
 ];
 
 const Shop = () => {
@@ -23,13 +23,15 @@ const Shop = () => {
   const [showFilters, setShowFilters] = useState(false);
 
   const filtered = useMemo(() => {
-    return products.filter((p) => {
-      if (category !== "all" && p.category !== category) return false;
-      if (color !== "All" && p.color !== color) return false;
-      const range = priceRanges[priceRange];
-      if (p.price < range.min || p.price > range.max) return false;
-      return true;
-    });
+    return products
+      .filter((p) => {
+        if (category !== "all" && p.category !== category) return false;
+        if (color !== "All" && p.color !== color) return false;
+        const range = priceRanges[priceRange];
+        if (p.price < range.min || p.price > range.max) return false;
+        return true;
+      })
+      .sort((a, b) => a.price - b.price);
   }, [category, color, priceRange]);
 
   const handleCategoryChange = (cat: string) => {
