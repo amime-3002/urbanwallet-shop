@@ -1,9 +1,9 @@
 import { useParams, Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { ShoppingBag, Star, ArrowLeft, Check } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { getProductById, getProductVariants } from "@/data/products";
+import { getProductById } from "@/data/products";
 import { useCart } from "@/context/CartContext";
 
 const ProductDetail = () => {
@@ -12,11 +12,6 @@ const ProductDetail = () => {
   const { addToCart } = useCart();
   const [selectedImage, setSelectedImage] = useState(0);
   const [added, setAdded] = useState(false);
-
-  useEffect(() => {
-    setSelectedImage(0);
-    setAdded(false);
-  }, [id]);
 
   if (!product) {
     return (
@@ -34,8 +29,6 @@ const ProductDetail = () => {
     setAdded(true);
     setTimeout(() => setAdded(false), 2000);
   };
-
-  const variants = getProductVariants(product);
 
   return (
     <main className="pt-20 md:pt-24 min-h-screen bg-background">
@@ -96,27 +89,8 @@ const ProductDetail = () => {
 
             <p className="font-body text-muted-foreground leading-relaxed mb-8">{product.longDescription}</p>
 
-            <div className="mb-8">
-              <p className="font-body text-xs tracking-widest uppercase text-muted-foreground mb-3">Color</p>
-              <div className="flex flex-wrap gap-3">
-                {variants.map((variant) => (
-                  <Button
-                    key={variant.id}
-                    asChild
-                    variant={variant.id === product.id ? "default" : "outline"}
-                    className={`h-9 rounded-sm px-4 font-body text-sm ${
-                      variant.id === product.id
-                        ? "bg-gold hover:bg-gold-dark text-accent-foreground"
-                        : "border-border text-muted-foreground hover:text-foreground"
-                    }`}
-                  >
-                    <Link to={`/product/${variant.id}`}>{variant.color}</Link>
-                  </Button>
-                ))}
-              </div>
-            </div>
-
             <div className="flex flex-wrap gap-4 mb-8 font-body text-sm text-muted-foreground">
+              <span className="px-3 py-1 rounded-sm border border-border">Color: {product.color}</span>
               <span className="px-3 py-1 rounded-sm border border-border">Type: {product.type}</span>
             </div>
 
