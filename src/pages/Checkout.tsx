@@ -6,6 +6,17 @@ import { Link } from "react-router-dom";
 import { ArrowLeft, Lock } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 
+const ALGERIA_WILAYAS = [
+  "Adrar", "Chlef", "Laghouat", "Oum El Bouaghi", "Batna", "Béjaïa", "Biskra", "Béchar",
+  "Blida", "Bouira", "Tamanrasset", "Tébessa", "Tlemcen", "Tiaret", "Tizi Ouzou", "Algiers",
+  "Djelfa", "Jijel", "Sétif", "Saïda", "Skikda", "Sidi Bel Abbès", "Annaba", "Guelma",
+  "Constantine", "Médéa", "Mostaganem", "M'Sila", "Mascara", "Ouargla", "Oran", "El Bayadh",
+  "Illizi", "Bordj Bou Arréridj", "Boumerdès", "El Tarf", "Tindouf", "Tissemsilt", "El Oued", "Khenchela",
+  "Souk Ahras", "Tipaza", "Mila", "Aïn Defla", "Naâma", "Aïn Témouchent", "Ghardaïa", "Relizane",
+  "Timimoun", "Bordj Badji Mokhtar", "Ouled Djellal", "Béni Abbès", "In Salah", "In Guezzam", "Touggourt", "Djanet",
+  "El M'Ghair", "El Meniaa"
+];
+
 const Checkout = () => {
   const { items, totalPrice, clearCart } = useCart();
   const { toast } = useToast();
@@ -51,7 +62,17 @@ const Checkout = () => {
                 <Input placeholder="Last Name" required className="bg-surface-sunken border-border font-body" />
                 <Input placeholder="Email" type="email" required className="bg-surface-sunken border-border font-body sm:col-span-2" />
                 <Input placeholder="Address" required className="bg-surface-sunken border-border font-body sm:col-span-2" />
-                <Input placeholder="City" required className="bg-surface-sunken border-border font-body" />
+                <select
+                  required
+                  defaultValue=""
+                  className="flex h-10 w-full rounded-md border border-border bg-surface-sunken px-3 py-2 text-base font-body text-foreground ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm"
+                  aria-label="Select your wilaya"
+                >
+                  <option value="" disabled>Select Wilaya</option>
+                  {ALGERIA_WILAYAS.map((wilaya) => (
+                    <option key={wilaya} value={wilaya}>{wilaya}</option>
+                  ))}
+                </select>
                 <Input placeholder="ZIP Code" required className="bg-surface-sunken border-border font-body" />
               </div>
             </div>
