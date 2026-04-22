@@ -31,7 +31,7 @@ const WILAYA_SHIPPING: Record<string, number> = {
   Jijel: 1300,
   Sétif: 1300,
   "Aïn Defla": 1300,
-  Bordj Bou Arréridj: 1400,
+  "Bordj Bou Arréridj": 1400,
   Mostaganem: 1500,
   Relizane: 1500,
   Tissemsilt: 1500,
