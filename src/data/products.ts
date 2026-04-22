@@ -27,8 +27,8 @@ export const products: Product[] = [
   {
     id: "classic-bifold",
     name: "Classic Bifold",
-    price: 17800,
-    originalPrice: 24000,
+    price: 5340,
+    originalPrice: 7200,
     description: "Premium full-grain leather bifold wallet with RFID protection.",
     longDescription: "Handcrafted from the finest full-grain Italian leather, the Classic Bifold combines timeless elegance with modern functionality. Features 8 card slots, 2 bill compartments, and advanced RFID-blocking technology to keep your information secure.",
     image: walletMens1,
@@ -43,7 +43,7 @@ export const products: Product[] = [
   {
     id: "elegance-zip",
     name: "Elegance Zip",
-    price: 21800,
+    price: 6540,
     description: "Sophisticated zip-around wallet with premium blush leather.",
     longDescription: "The Elegance Zip is designed for the modern woman who values both style and organization. Crafted from supple blush leather with gold-tone hardware, it features 12 card slots, a zip coin pocket, and multiple bill compartments — all secured with a smooth zip-around closure.",
     image: walletWomens1,
@@ -58,7 +58,7 @@ export const products: Product[] = [
   {
     id: "stealth-card",
     name: "Stealth Card Holder",
-    price: 11800,
+    price: 3540,
     description: "Ultra-slim cardholder for the modern minimalist.",
     longDescription: "Stripped down to essentials, the Stealth Card Holder is crafted from premium black leather with a sleek profile that fits effortlessly in any pocket. Holds up to 6 cards with a center cash slot. RFID-blocking lining included.",
     image: walletMinimal1,
@@ -73,7 +73,7 @@ export const products: Product[] = [
   {
     id: "heritage-leather",
     name: "Heritage Leather",
-    price: 27800,
+    price: 8340,
     description: "Artisan-crafted tan leather wallet that ages beautifully.",
     longDescription: "The Heritage Leather wallet celebrates traditional craftsmanship. Made from vegetable-tanned leather that develops a rich patina over time, each piece is unique. Features hand-stitched edges, 6 card slots, and 2 bill compartments.",
     image: walletLeather1,
@@ -88,7 +88,7 @@ export const products: Product[] = [
   {
     id: "navigator-zip",
     name: "Navigator Zip",
-    price: 19800,
+    price: 5940,
     description: "Navy leather zip wallet with gold accent hardware.",
     longDescription: "The Navigator Zip brings a refined nautical touch to everyday carry. Premium navy leather exterior with contrasting gold zipper and interior card slots. Water-resistant coating ensures durability in any weather.",
     image: walletMens2,
@@ -103,7 +103,7 @@ export const products: Product[] = [
   {
     id: "bordeaux-clutch",
     name: "Bordeaux Clutch",
-    price: 25800,
+    price: 7740,
     description: "Statement burgundy clutch wallet with tassel detail.",
     longDescription: "Make a statement with the Bordeaux Clutch. Rich burgundy leather with an elegant tassel zipper pull, this versatile piece transitions seamlessly from day to evening. Features a wristlet strap, phone pocket, and 10 card slots.",
     image: walletWomens2,
@@ -118,7 +118,7 @@ export const products: Product[] = [
   {
     id: "carbon-slim",
     name: "Carbon Slim",
-    price: 15800,
+    price: 4740,
     description: "Modern carbon-fiber pattern slim wallet.",
     longDescription: "Where technology meets luxury. The Carbon Slim features a distinctive carbon-fiber patterned leather exterior with a magnetic money clip. Ultra-thin design holds up to 8 cards without adding bulk.",
     image: walletMinimal2,
@@ -133,8 +133,8 @@ export const products: Product[] = [
   {
     id: "artisan-fold",
     name: "Artisan Fold",
-    price: 29800,
-    originalPrice: 35800,
+    price: 8940,
+    originalPrice: 10740,
     description: "Hand-stitched full-grain leather trifold wallet.",
     longDescription: "Our masterpiece of leather craftsmanship. The Artisan Fold is hand-stitched by skilled artisans using centuries-old techniques. Full-grain leather, brass hardware, and a spacious trifold design with 12 card slots make this our most luxurious offering.",
     image: walletLeather1,
