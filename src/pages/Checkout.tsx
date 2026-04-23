@@ -6,6 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Link } from "react-router-dom";
 import { ArrowLeft, Lock } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import { supabase } from "@/integrations/supabase/client";
 
 const ALGERIA_WILAYAS = [
   "Adrar", "Chlef", "Laghouat", "Oum El Bouaghi", "Batna", "Béjaïa", "Biskra", "Béchar",
@@ -83,6 +84,7 @@ const Checkout = () => {
   const { toast } = useToast();
   const [selectedWilaya, setSelectedWilaya] = useState("");
   const [paymentMethod, setPaymentMethod] = useState("cash-on-delivery");
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const shippingPrice = useMemo(() => selectedWilaya ? WILAYA_SHIPPING[selectedWilaya] : 0, [selectedWilaya]);
 
   if (items.length === 0) {
@@ -96,8 +98,48 @@ const Checkout = () => {
     );
   }
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setIsSubmitting(true);
+
+    const formData = new FormData(e.currentTarget);
+    const orderDetails = {
+      customer: {
+        firstName: String(formData.get("firstName") || ""),
+        lastName: String(formData.get("lastName") || ""),
+        email: String(formData.get("email") || ""),
+        address: String(formData.get("address") || ""),
+        wilaya: selectedWilaya,
+        zipCode: String(formData.get("zipCode") || ""),
+      },
+      payment: {
+        method: paymentMethod,
+        cardholderName: String(formData.get("cardholderName") || ""),
+        baridimobPhone: String(formData.get("baridimobPhone") || ""),
+        transferReference: String(formData.get("transferReference") || ""),
+      },
+      items: items.map((item) => ({
+        name: item.product.name,
+        quantity: item.quantity,
+        unitPrice: item.product.price,
+        lineTotal: item.product.price * item.quantity,
+      })),
+      subtotal: totalPrice,
+      shippingPrice,
+      total: totalPrice + shippingPrice,
+    };
+
+    const { error } = await supabase.functions.invoke("send-order-email", {
+      body: orderDetails,
+    });
+
+    setIsSubmitting(false);
+
+    if (error) {
+      toast({ title: "Order email failed", description: "Please try again or contact us directly.", variant: "destructive" });
+      return;
+    }
+
     toast({ title: "Order placed!", description: "Thank you for your purchase." });
     clearCart();
   };
