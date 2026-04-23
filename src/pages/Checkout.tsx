@@ -164,10 +164,10 @@ const Checkout = () => {
             <div>
               <h2 className="font-display text-lg font-semibold mb-4">Shipping Information</h2>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <Input placeholder="First Name" required className="bg-surface-sunken border-border font-body" />
-                <Input placeholder="Last Name" required className="bg-surface-sunken border-border font-body" />
-                <Input placeholder="Email" type="email" required className="bg-surface-sunken border-border font-body sm:col-span-2" />
-                <Input placeholder="Address" required className="bg-surface-sunken border-border font-body sm:col-span-2" />
+                <Input name="firstName" placeholder="First Name" required className="bg-surface-sunken border-border font-body" />
+                <Input name="lastName" placeholder="Last Name" required className="bg-surface-sunken border-border font-body" />
+                <Input name="email" placeholder="Email" type="email" required className="bg-surface-sunken border-border font-body sm:col-span-2" />
+                <Input name="address" placeholder="Address" required className="bg-surface-sunken border-border font-body sm:col-span-2" />
                 <select
                   required
                   value={selectedWilaya}
@@ -180,7 +180,7 @@ const Checkout = () => {
                     <option key={wilaya} value={wilaya}>{wilaya}</option>
                   ))}
                 </select>
-                <Input placeholder="ZIP Code" required className="bg-surface-sunken border-border font-body" />
+                <Input name="zipCode" placeholder="ZIP Code" required className="bg-surface-sunken border-border font-body" />
               </div>
             </div>
             <div>
@@ -199,7 +199,7 @@ const Checkout = () => {
                 </select>
                 {paymentMethod === "card" && (
                   <>
-                    <Input placeholder="Cardholder Name" required className="bg-surface-sunken border-border font-body sm:col-span-2" />
+                    <Input name="cardholderName" placeholder="Cardholder Name" required className="bg-surface-sunken border-border font-body sm:col-span-2" />
                     <Input placeholder="Card Number" inputMode="numeric" required className="bg-surface-sunken border-border font-body sm:col-span-2" />
                     <Input placeholder="MM/YY" inputMode="numeric" required className="bg-surface-sunken border-border font-body" />
                     <Input placeholder="CVC" inputMode="numeric" required className="bg-surface-sunken border-border font-body" />
@@ -207,8 +207,8 @@ const Checkout = () => {
                 )}
                 {paymentMethod === "baridimob" && (
                   <>
-                    <Input placeholder="BaridiMob Phone Number" type="tel" required className="bg-surface-sunken border-border font-body" />
-                    <Input placeholder="Transfer Reference" required className="bg-surface-sunken border-border font-body" />
+                    <Input name="baridimobPhone" placeholder="BaridiMob Phone Number" type="tel" required className="bg-surface-sunken border-border font-body" />
+                    <Input name="transferReference" placeholder="Transfer Reference" required className="bg-surface-sunken border-border font-body" />
                   </>
                 )}
               </div>
@@ -236,8 +236,8 @@ const Checkout = () => {
                   <span className="text-gold">{(totalPrice + shippingPrice).toLocaleString()} DA</span>
                 </div>
               </div>
-              <Button type="submit" className="w-full bg-gold hover:bg-gold-dark text-accent-foreground font-body tracking-wider py-6">
-                <Lock className="mr-2" size={16} /> Place Order
+              <Button type="submit" disabled={isSubmitting} className="w-full bg-gold hover:bg-gold-dark text-accent-foreground font-body tracking-wider py-6">
+                <Lock className="mr-2" size={16} /> {isSubmitting ? "Placing Order..." : "Place Order"}
               </Button>
               <p className="text-xs text-muted-foreground text-center font-body">Secure checkout · SSL encrypted</p>
             </div>
