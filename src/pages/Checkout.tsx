@@ -6,6 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Link } from "react-router-dom";
 import { ArrowLeft, Lock } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import { supabase } from "@/integrations/supabase/client";
 
 const ALGERIA_WILAYAS = [
   "Adrar", "Chlef", "Laghouat", "Oum El Bouaghi", "Batna", "Béjaïa", "Biskra", "Béchar",
@@ -83,6 +84,7 @@ const Checkout = () => {
   const { toast } = useToast();
   const [selectedWilaya, setSelectedWilaya] = useState("");
   const [paymentMethod, setPaymentMethod] = useState("cash-on-delivery");
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const shippingPrice = useMemo(() => selectedWilaya ? WILAYA_SHIPPING[selectedWilaya] : 0, [selectedWilaya]);
 
   if (items.length === 0) {
@@ -96,8 +98,48 @@ const Checkout = () => {
     );
   }
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setIsSubmitting(true);
+
+    const formData = new FormData(e.currentTarget);
+    const orderDetails = {
+      customer: {
+        firstName: String(formData.get("firstName") || ""),
+        lastName: String(formData.get("lastName") || ""),
+        email: String(formData.get("email") || ""),
+        address: String(formData.get("address") || ""),
+        wilaya: selectedWilaya,
+        zipCode: String(formData.get("zipCode") || ""),
+      },
+      payment: {
+        method: paymentMethod,
+        cardholderName: String(formData.get("cardholderName") || ""),
+        baridimobPhone: String(formData.get("baridimobPhone") || ""),
+        transferReference: String(formData.get("transferReference") || ""),
+      },
+      items: items.map((item) => ({
+        name: item.product.name,
+        quantity: item.quantity,
+        unitPrice: item.product.price,
+        lineTotal: item.product.price * item.quantity,
+      })),
+      subtotal: totalPrice,
+      shippingPrice,
+      total: totalPrice + shippingPrice,
+    };
+
+    const { error } = await supabase.functions.invoke("send-order-email", {
+      body: orderDetails,
+    });
+
+    setIsSubmitting(false);
+
+    if (error) {
+      toast({ title: "Order email failed", description: "Please try again or contact us directly.", variant: "destructive" });
+      return;
+    }
+
     toast({ title: "Order placed!", description: "Thank you for your purchase." });
     clearCart();
   };
@@ -122,10 +164,10 @@ const Checkout = () => {
             <div>
               <h2 className="font-display text-lg font-semibold mb-4">Shipping Information</h2>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <Input placeholder="First Name" required className="bg-surface-sunken border-border font-body" />
-                <Input placeholder="Last Name" required className="bg-surface-sunken border-border font-body" />
-                <Input placeholder="Email" type="email" required className="bg-surface-sunken border-border font-body sm:col-span-2" />
-                <Input placeholder="Address" required className="bg-surface-sunken border-border font-body sm:col-span-2" />
+                <Input name="firstName" placeholder="First Name" required className="bg-surface-sunken border-border font-body" />
+                <Input name="lastName" placeholder="Last Name" required className="bg-surface-sunken border-border font-body" />
+                <Input name="email" placeholder="Email" type="email" required className="bg-surface-sunken border-border font-body sm:col-span-2" />
+                <Input name="address" placeholder="Address" required className="bg-surface-sunken border-border font-body sm:col-span-2" />
                 <select
                   required
                   value={selectedWilaya}
@@ -138,7 +180,7 @@ const Checkout = () => {
                     <option key={wilaya} value={wilaya}>{wilaya}</option>
                   ))}
                 </select>
-                <Input placeholder="ZIP Code" required className="bg-surface-sunken border-border font-body" />
+                <Input name="zipCode" placeholder="ZIP Code" required className="bg-surface-sunken border-border font-body" />
               </div>
             </div>
             <div>
@@ -157,7 +199,7 @@ const Checkout = () => {
                 </select>
                 {paymentMethod === "card" && (
                   <>
-                    <Input placeholder="Cardholder Name" required className="bg-surface-sunken border-border font-body sm:col-span-2" />
+                    <Input name="cardholderName" placeholder="Cardholder Name" required className="bg-surface-sunken border-border font-body sm:col-span-2" />
                     <Input placeholder="Card Number" inputMode="numeric" required className="bg-surface-sunken border-border font-body sm:col-span-2" />
                     <Input placeholder="MM/YY" inputMode="numeric" required className="bg-surface-sunken border-border font-body" />
                     <Input placeholder="CVC" inputMode="numeric" required className="bg-surface-sunken border-border font-body" />
@@ -165,8 +207,8 @@ const Checkout = () => {
                 )}
                 {paymentMethod === "baridimob" && (
                   <>
-                    <Input placeholder="BaridiMob Phone Number" type="tel" required className="bg-surface-sunken border-border font-body" />
-                    <Input placeholder="Transfer Reference" required className="bg-surface-sunken border-border font-body" />
+                    <Input name="baridimobPhone" placeholder="BaridiMob Phone Number" type="tel" required className="bg-surface-sunken border-border font-body" />
+                    <Input name="transferReference" placeholder="Transfer Reference" required className="bg-surface-sunken border-border font-body" />
                   </>
                 )}
               </div>
@@ -194,8 +236,8 @@ const Checkout = () => {
                   <span className="text-gold">{(totalPrice + shippingPrice).toLocaleString()} DA</span>
                 </div>
               </div>
-              <Button type="submit" className="w-full bg-gold hover:bg-gold-dark text-accent-foreground font-body tracking-wider py-6">
-                <Lock className="mr-2" size={16} /> Place Order
+              <Button type="submit" disabled={isSubmitting} className="w-full bg-gold hover:bg-gold-dark text-accent-foreground font-body tracking-wider py-6">
+                <Lock className="mr-2" size={16} /> {isSubmitting ? "Placing Order..." : "Place Order"}
               </Button>
               <p className="text-xs text-muted-foreground text-center font-body">Secure checkout · SSL encrypted</p>
             </div>
