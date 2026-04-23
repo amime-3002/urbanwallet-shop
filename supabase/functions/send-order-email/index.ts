@@ -51,8 +51,9 @@ Deno.serve(async (req) => {
     const serviceId = Deno.env.get("EMAILJS_SERVICE_ID");
     const templateId = Deno.env.get("EMAILJS_TEMPLATE_ID");
     const apiKey = Deno.env.get("ORDER_EMAIL_API_KEY");
+    const privateKey = Deno.env.get("EMAILJS_PRIVATE_KEY");
 
-    if (!serviceId || !templateId || !apiKey) {
+    if (!serviceId || !templateId || !apiKey || !privateKey) {
       throw new Error("EmailJS configuration is missing.");
     }
 
@@ -83,6 +84,7 @@ Deno.serve(async (req) => {
         service_id: serviceId,
         template_id: templateId,
         user_id: apiKey,
+        accessToken: privateKey,
         template_params: {
           to_email: STORE_OWNER_EMAIL,
           customer_name: `${order.customer.firstName} ${order.customer.lastName}`,
